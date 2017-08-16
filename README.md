@@ -29,6 +29,8 @@ $ npm install -g fal
 
 This will install the FolderActivityLogger on your global node environment and enable you to call it anywhere on your system.
 
+# Usage
+
 Now, create a folder where you wish to store the data that you want to collect. In that folder, create a config.json file, which will contain the configuration details for fal.
 
 **config.json**
@@ -62,6 +64,8 @@ $ fal
 ```
 
 You will need to keep the terminal window open for it to continue to capture changes to the meta-data. We are developing the tool further so that you can start it as a background service on your computer/server.
+
+# Output
 
 ** meta-log.nedb **
 
