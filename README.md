@@ -5,7 +5,7 @@ This is a lightweight [node.js]() command line tool used to track the metadata a
 
 The tool was built as part of the EPSRC [Language of Collaborative Manufacturing](http://locm.blogs.ilrt.org) project and used to collect data on the digital activity of a Formula Student project. The aim was to see if the metadata activity could provide insights into the performance of the project and final product. This could then be used to support Engineering Project Management in real-time.
 
-We want to encourage more Engineering Design researchers to capture and analyse the digital activity of engineering projects as we see has great potential in providing insights for both practitioners and researchers.
+We want to encourage more Engineering Design researchers to capture and analyse the digital activity of engineering projects as we see it having great potential in providing insights for both practitioners and researchers.
 
 # Installation
 
@@ -27,7 +27,7 @@ $ npm install -g fal
 
 ```
 
-This will install the FolderActivityLogger on your global node environment and enable you to call it anywhere on your system.
+This will install the FolderActivityLogger in your global node environment and enable you to call it anywhere on your system.
 
 # Usage
 
@@ -38,7 +38,7 @@ Now, create a folder where you wish to store the data that you want to collect. 
 ```
 
 {
-  "folder": "./test",
+  "folder": "<folder-path-here>",
   "db": "./meta-log.nde.db",
   "logFromStart": true,
   "chokidarOptions" : {
