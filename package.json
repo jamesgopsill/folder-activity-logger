@@ -1,21 +1,51 @@
 {
-  "name": "fal",
-  "version": "0.1.0",
+  "name": "@jamesgopsill/folder-activity-logger",
+  "version": "0.2.0",
   "description": "A folder activity logging utility",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["folder", "activity", "logger"],
+  "main": "dist/index.js",
+  "keywords": [
+    "folder",
+    "activity",
+    "logger"
+  ],
   "author": "James Gopsill",
-  "license": "ISC",
+  "license": "MIT",
+  "private": "false",
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesgopsill/folder-activity-logger"
+  },
+  "bugs": {
+    "url": "https://github.com/jamesgopsill/folder-activity-logger/issues"
+  },
+  "homepage": "https://jamesgopsill.github.io/folder-activity-logger",
   "bin": {
-    "fal": "./index.js"
+    "fal": "dist/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "docs": "typedoc",
+    "format": "prettier --write src/**/*",
+    "pre-add": "yarn format && yarn docs && node utils/clean-dist.mjs && yarn tsc && node utils/clean-crlf.mjs"
   },
   "dependencies": {
-    "chalk": "^2.1.0",
-    "chokidar": "^1.7.0",
-    "moment": "^2.18.1",
-    "nedb": "^1.8.0"
+    "chokidar": "^3.5.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "@types/node": "^17.0.25",
+    "glob": "^8.0.1",
+    "prettier": "^2.6.2",
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "ts-node": "^10.7.0",
+    "typedoc": "^0.22.15",
+    "typescript": "^4.6.3"
   }
 }

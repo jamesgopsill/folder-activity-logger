@@ -1,0 +1,93 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@jamesgopsill/folder-activity-logger</title><meta name="description" content="Documentation for @jamesgopsill/folder-activity-logger"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@jamesgopsill/folder-activity-logger</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@jamesgopsill/folder-activity-logger </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#folder-activity-logger" id="folder-activity-logger" style="color: inherit; text-decoration: none;">
+  <h1>Folder Activity Logger</h1>
+</a>
+<p><a href="http://jamesgopsill.github.io">Dr James Gopsill</a></p>
+<p>This is a lightweight typescripted <a href="https://nodejs.org/en/">node.js</a> tool used to track the metadata activity within a folder and it&#39;s sub-folders using <a href="https://www.npmjs.com/package/chokidar">chokidar</a>. The raw information is then stored in a text file, which we can later be processed and analysed.</p>
+<p>The tool was built as part of the EPSRC <a href="http://locm.blogs.ilrt.org">Language of Collaborative Manufacturing</a> project and used to collect data on the digital activity of a Formula Student project. The aim was to see if the metadata could provide insights into the performance of the project and final product. This could then be used to support Engineering Project Management in real-time.</p>
+<p>We want to encourage more Engineering Design researchers to capture and analyse the digital activity of engineering projects as we see it having great potential in providing insights for both practitioners and researchers.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h1>Installation</h1>
+</a>
+<p>The first thing you need to do to get up and running is to have node installed on your system. Node.js installers can be found <a href="https://nodejs.org/en/download/">here</a>. To confirm that you have node installed and running on your system, you can open a terminal/command prompt window and run the following command:</p>
+<pre><code><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">node</span><span class="hl-1"> -</span><span class="hl-0">v</span>
+</code></pre>
+<p>This should display the version of node that you&#39;re running on your system.</p>
+<p>Now that you have node installed, you can use the built-in node package manager <a href="https://www.npmjs.com">npm</a> to install the FolderActivityLogger onto your system. Again, in the terminal/command prompt run the following command.</p>
+<pre><code><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> -</span><span class="hl-0">g</span><span class="hl-1"> </span><span class="hl-0">jamesgopsill</span><span class="hl-1">/</span><span class="hl-0">folder</span><span class="hl-1">-</span><span class="hl-0">activity</span><span class="hl-1">-</span><span class="hl-0">logger</span>
+</code></pre>
+<p>This will install the FolderActivityLogger in your global node environment and enable you to call it anywhere on your system.</p>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h1>Usage</h1>
+</a>
+<p>To use the logger, create a javascript file (e.g., <code>index.mjs</code>) and add the following.</p>
+<pre><code class="language-javascript"><span class="hl-2">import</span><span class="hl-1"> { </span><span class="hl-0">FAL</span><span class="hl-1"> } </span><span class="hl-2">from</span><span class="hl-1"> </span><span class="hl-3">&quot;../src&quot;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">config</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-0">watchGlob:</span><span class="hl-1"> </span><span class="hl-3">&quot;path/you/wish/to/monitor&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">logFilePath:</span><span class="hl-1"> </span><span class="hl-3">&quot;path/to/log.txt&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-0">debug:</span><span class="hl-1"> </span><span class="hl-4">false</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">watcher</span><span class="hl-1"> = </span><span class="hl-4">new</span><span class="hl-1"> </span><span class="hl-6">FAL</span><span class="hl-1">(</span><span class="hl-0">config</span><span class="hl-1">)</span><br/><br/><span class="hl-0">watcher</span><span class="hl-1">.</span><span class="hl-6">watch</span><span class="hl-1">()</span><br/><br/><span class="hl-7">// Set a timeout to stop listening (if you wish)</span><br/><span class="hl-6">setTimeout</span><span class="hl-1">(() </span><span class="hl-4">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">watcher</span><span class="hl-1">.</span><span class="hl-6">stop</span><span class="hl-1">()</span><br/><span class="hl-1">}, </span><span class="hl-8">5000</span><span class="hl-1">)</span>
+</code></pre>
+<p>Then run the file in the your command line:</p>
+<pre><code><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">node</span><span class="hl-1"> ./</span><span class="hl-0">index</span><span class="hl-1">.</span><span class="hl-0">mjs</span>
+</code></pre>
+<p>You will need to keep the terminal window open for it to continue to capture changes to the meta-data.</p>
+
+<a href="#output" id="output" style="color: inherit; text-decoration: none;">
+  <h1>Output</h1>
+</a>
+<p>The output is a simple txt file containing json objects on each line that detail an event that has occurred in the filesystem you&#39;re monitoring. The events that are captured are: add/addDir, change, unlink/unlinkDir.</p>
+<p>The add, addDir and change events will contain the following information. This comes from node.js <a href="https://nodejs.org/api/fs.html#fs_stat_time_values">fs.stat</a> function.</p>
+<ul>
+<li><code>event</code>: event type that was captured (add, addDir, change)</li>
+<li><code>path</code>: path to the object (file/folder/symbolic link)</li>
+<li><code>dev</code>: device number that the object is held on</li>
+<li><code>mode</code>: information on the type of object and permissions of the object</li>
+<li><code>nlink</code>: hard links</li>
+<li><code>uid</code>: user-id of the owner of the object</li>
+<li><code>gid</code>: group-id of the owner of the object</li>
+<li><code>rdev</code>: device Id (if special file)</li>
+<li><code>blksize</code>: block size for filesystem I/O</li>
+<li><code>ino</code>: inode number</li>
+<li><code>size</code>: size in bytes</li>
+<li><code>blocks</code>: number of blocks allocated</li>
+<li><code>atimeMs</code>: time when file data was last accessed (milliseconds)</li>
+<li><code>mtimeMs</code>: time when file data was last modified (milliseconds)</li>
+<li><code>ctimeMs</code>: vtime when file status was last changed (milliseconds)</li>
+<li><code>birthtimeMs</code>: time of file creation (only available on some systems, milliseconds)</li>
+<li><code>atime</code>: time when file data was last accessed</li>
+<li><code>mtime</code>: time when file data was last modified</li>
+<li><code>ctime</code>: time when file status was last changed</li>
+<li><code>birthtime</code>: time of file creation (only available on some systems)</li>
+<li><code>_id</code>: unique database document id</li>
+<li><code>createdAt</code>: date of creation of the document</li>
+<li><code>updatedAt</code>: most recent update to the document</li>
+</ul>
+<p>Whilst unlink/unlinkDir contain the date when the file/folder was removed from the folder.</p>
+<ul>
+<li><code>event</code>: event type that was captured (unlink, unlinkDir)</li>
+<li><code>path</code>: file/folder path of interest</li>
+<li><code>_id</code>: unique database document id</li>
+<li><code>createdAt</code>: date of creation of the document</li>
+<li><code>updatedAt</code>: most recent update to the document</li>
+</ul>
+<p>In addition, the tools produces three fal json objects to help identify key moments in the indexing and monitoring of the filesystem.</p>
+<pre><code><span class="hl-1">{</span><span class="hl-3">&quot;fal&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;watch-started&quot;</span><span class="hl-1">}</span><br/><span class="hl-1">{</span><span class="hl-3">&quot;fal&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;indexing-complete&quot;</span><span class="hl-1">}</span><br/><span class="hl-1">{</span><span class="hl-3">&quot;fal&quot;</span><span class="hl-1">:</span><span class="hl-3">&quot;watch-stopped&quot;</span><span class="hl-1">}</span>
+</code></pre>
+<p>Further documentation on the class and interfaces available in the package can be found <a href="https://jamesgopsill.github.io/folder-activity-logger">here</a>.</p>
+
+<a href="#citation" id="citation" style="color: inherit; text-decoration: none;">
+  <h1>Citation</h1>
+</a>
+<p>Please feel free to download and use this within your research projects. All we ask is that you cite our work in your paper and that you add your paper to the growing list of work that has used the tool in their studies! :)</p>
+<p>Gopsill, J., Snider, C., McMahon, C., &amp; Hicks, B. (2016). Automatic generation of design structure matrices through the evolution of product models. <em>Artificial Intelligence for Engineering Design, Analysis and Manufacturing</em>, 30(4), 424-445. doi:10.1017/S0890060416000391</p>
+<pre><code class="language-latex"><br/><span class="hl-1">@article{gopsill2016,</span><br/><span class="hl-1">  title={Automatic generation of design structure matrices through the evolution of product models},</span><br/><span class="hl-1">  volume={30},</span><br/><span class="hl-1">  DOI={10.1017/S0890060416000391},</span><br/><span class="hl-1">  number={4},</span><br/><span class="hl-1">  journal={Artificial Intelligence for Engineering Design, Analysis and Manufacturing},</span><br/><span class="hl-1">  publisher={Cambridge University Press},</span><br/><span class="hl-1">  author={Gopsill, James A. and Snider, Chris and McMahon, Chris and Hicks, Ben},</span><br/><span class="hl-1">  year={2016},</span><br/><span class="hl-1">  pages={424–445},</span><br/><span class="hl-1">  url={https://jamesgopsill.github.io/Publications/papers/journal/aiedam2016/aiedam2016.pdf}</span><br/><span class="hl-1">}</span><br/>
+</code></pre>
+<p>Also, we would love to hear how you&#39;re using the tool and the studies that you&#39;re performing with it.</p>
+
+<a href="#list-of-publications" id="list-of-publications" style="color: inherit; text-decoration: none;">
+  <h1>List of Publications</h1>
+</a>
+<p>This is a list of papers that have used the tool in their studies.</p>
+<p><a href="https://jamesgopsill.github.io/Publications/papers/conference/iced2017/iced2017.pdf">Gopsill, J.A., Snider, C.M., Emanuel, L., Joel-Edgar, S., &amp; Hicks, B.J. (2017). Automatic design structure matrices: a comparison of two formula student projects. In: <em>Proceedings of the 21st International Conference on Engineering Design (ICED17), Vol. 6: Design Information and Knowledge, Vancouver, Canada.</em></a></p>
+<p><a href="https://jamesgopsill.github.io/Publications/papers/journal/aiedam2016/aiedam2016.pdf">Gopsill, J.A., Snider, C.M., McMahon, C., &amp; Hicks, B.J. (2016). Automatic generation of design structure matrices through the evolution of product models. <em>Artificial Intelligence for Engineering Design, Analysis and Manufacturing</em>, 30(4), 424-445. doi:10.1017/S0890060416000391</a></p>
+<p><a href="https://jamesgopsill.github.io/Publications/papers/conference/plm2015/plm2015.pdf">Gopsill, J.A., Snider, C.M., Shi L., and Hicks B.J. (2015). Modelling the evolution of computer aided design models: investigating the potential for supporting engineering project management. In: <em>Proceedings of the International Conference on Product Lifecycle Management (PLM15)</em>.</a></p>
+<p><a href="https://jamesgopsill.github.io/Publications/papers/conference/design2014/design2014b.pdf">Gopsill, J.A., Shi, L. McMahon, C. &amp; Hicks B.J. (2014). The engineering design process through an understanding of the evolution of engineering digital objects. In: <em>Proceedings of the International Conference on DESIGN</em>.</a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/FAL.html" class="tsd-kind-icon">FAL</a></li><li class="tsd-kind-interface"><a href="interfaces/FALConfig.html" class="tsd-kind-icon">FALConfig</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

@@ -1,9 +1,9 @@
-# FolderActivityLogger
-[Dr. James Gopsill](http://jamesgopsill.github.io)
+# Folder Activity Logger
+[Dr James Gopsill](http://jamesgopsill.github.io)
 
-This is a lightweight [node.js]() command line tool used to track the metadata activity within a folder and it's sub-folders using [chokidar](https://www.npmjs.com/package/chokidar). The raw information is then stored using [neDB](https://www.npmjs.com/package/nedb), which we can then access, post-process and analyse further.
+This is a lightweight typescripted [node.js](https://nodejs.org/en/) tool used to track the metadata activity within a folder and it's sub-folders using [chokidar](https://www.npmjs.com/package/chokidar). The raw information is then stored in a text file, which we can later be processed and analysed.
 
-The tool was built as part of the EPSRC [Language of Collaborative Manufacturing](http://locm.blogs.ilrt.org) project and used to collect data on the digital activity of a Formula Student project. The aim was to see if the metadata activity could provide insights into the performance of the project and final product. This could then be used to support Engineering Project Management in real-time.
+The tool was built as part of the EPSRC [Language of Collaborative Manufacturing](http://locm.blogs.ilrt.org) project and used to collect data on the digital activity of a Formula Student project. The aim was to see if the metadata could provide insights into the performance of the project and final product. This could then be used to support Engineering Project Management in real-time.
 
 We want to encourage more Engineering Design researchers to capture and analyse the digital activity of engineering projects as we see it having great potential in providing insights for both practitioners and researchers.
 
@@ -12,9 +12,7 @@ We want to encourage more Engineering Design researchers to capture and analyse 
 The first thing you need to do to get up and running is to have node installed on your system. Node.js installers can be found [here](https://nodejs.org/en/download/). To confirm that you have node installed and running on your system, you can open a terminal/command prompt window and run the following command:
 
 ```
-
 $ node -v
-
 ```
 
 This should display the version of node that you're running on your system.
@@ -22,54 +20,45 @@ This should display the version of node that you're running on your system.
 Now that you have node installed, you can use the built-in node package manager [npm](https://www.npmjs.com) to install the FolderActivityLogger onto your system. Again, in the terminal/command prompt run the following command.
 
 ```
-
-$ npm install -g fal
-
+$ npm install -g jamesgopsill/folder-activity-logger
 ```
 
 This will install the FolderActivityLogger in your global node environment and enable you to call it anywhere on your system.
 
 # Usage
 
-Now, create a folder where you wish to store the data that you want to collect. In that folder, create a config.json file, which will contain the configuration details for fal.
+To use the logger, create a javascript file (e.g., `index.mjs`) and add the following.
 
-**config.json**
+```javascript
+import { FAL } from "../src"
 
-```
-
-{
-  "folder": "<folder-path-here>",
-  "db": "./meta-log.nde.db",
-  "logFromStart": true,
-  "chokidarOptions" : {
-    "userPolling" : true,
-    "alwaysStat" : true,
-    "ignorePermissionErrors" : true
-  }
+const config = {
+	watchGlob: "path/you/wish/to/monitor",
+	logFilePath: "path/to/log.txt",
+	debug: false
 }
 
+const watcher = new FAL(config)
+
+watcher.watch()
+
+// Set a timeout to stop listening (if you wish)
+setTimeout(() => {
+	watcher.stop()
+}, 5000)
 ```
 
-- `folder` the path to the folder you wish to monitor
-- `db` this is the path to the db (will be automatically created if it does not already exist).
-- `initialScan` (default: true) will capture all the current information of the folder structure on start
-- `chokidarOptions` parse options to chokidar for it to work correctly in your environment. Use the defaults above if unsure.
-
-`cd` into the folder and run the following command to start fal.
+Then run the file in the your command line:
 
 ```
-
-$ fal
-
+$ node ./index.mjs
 ```
 
-You will need to keep the terminal window open for it to continue to capture changes to the meta-data. We are developing the tool further so that you can start it as a background service on your computer/server.
+You will need to keep the terminal window open for it to continue to capture changes to the meta-data.
 
 # Output
 
-** meta-log.nedb **
-
-The output is stored in the nedb format, which is a NoSQL document store. The events that are captured are: add/addDir, change, unlink/unlinkDir.
+The output is a simple txt file containing json objects on each line that detail an event that has occurred in the filesystem you're monitoring. The events that are captured are: add/addDir, change, unlink/unlinkDir.
 
 The add, addDir and change events will contain the following information. This comes from node.js [fs.stat](https://nodejs.org/api/fs.html#fs_stat_time_values) function.
 
@@ -105,6 +94,16 @@ Whilst unlink/unlinkDir contain the date when the file/folder was removed from t
 - `createdAt`: date of creation of the document
 - `updatedAt`: most recent update to the document
 
+In addition, the tools produces three fal json objects to help identify key moments in the indexing and monitoring of the filesystem.
+
+```
+{"fal":"watch-started"}
+{"fal":"indexing-complete"}
+{"fal":"watch-stopped"}
+```
+
+Further documentation on the class and interfaces available in the package can be found [here](https://jamesgopsill.github.io/folder-activity-logger).
+
 # Citation
 
 Please feel free to download and use this within your research projects. All we ask is that you cite our work in your paper and that you add your paper to the growing list of work that has used the tool in their studies! :)
@@ -129,13 +128,6 @@ Gopsill, J., Snider, C., McMahon, C., & Hicks, B. (2016). Automatic generation o
 ```
 
 Also, we would love to hear how you're using the tool and the studies that you're performing with it.
-
-# Roadmap
-
-1. Run as a background service on your computer/server
-2. Publish the post-processing tools to automatically create Design Structure Matrices from the metadata captured in the neDB format.
-3. Provide methods to anonymise the data for publication
-4. Provide a service to store and share metadata logs of engineering projects
 
 # List of Publications
 
