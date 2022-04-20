@@ -1,6 +1,6 @@
 {
   "name": "@jamesgopsill/folder-activity-logger",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A folder activity logging utility",
   "main": "dist/index.js",
   "keywords": [

@@ -14,6 +14,9 @@ class FAL {
         this.watchGlob = config.watchGlob;
         this.logFilePath = config.logFilePath;
         this.debug = config.debug;
+        this.onReady = this.onReady.bind(this);
+        this.onAll = this.onAll.bind(this);
+        this.onError = this.onError.bind(this);
         const msg = {
             fal: "watch-started",
         };
@@ -29,29 +32,28 @@ class FAL {
         };
         this.watcher = chokidar_1.default
             .watch(this.watchGlob, options)
-            .on("all", (event, path, details) => {
-            if (this.debug)
-                console.log(`|- ${event} ${path}`);
-            let json = {};
-            if (details) {
-                json = details;
-            }
-            json.path = path;
-            json.event = event;
-            this.append(json);
-        })
-            .on("error", (err) => {
-            console.log("Watch Error");
-            console.log(err);
-        })
-            .on("ready", () => {
-            if (this.debug)
-                console.log("|- Indexing Complete");
-            const msg = {
-                fal: "indexing-complete",
-            };
-            this.append(msg);
-        });
+            .on("all", this.onAll)
+            .on("error", this.onError)
+            .on("ready", this.onReady);
+    }
+    onAll(event, path, details) {
+        if (this.debug)
+            console.log(`|- ${event} ${path}`);
+        let json = {};
+        if (details) {
+            json = details;
+        }
+        json.path = path;
+        json.event = event;
+        this.append(json);
+    }
+    onReady() {
+        if (this.debug)
+            console.log("|- Indexing Complete");
+    }
+    onError(err) {
+        console.log("Watch Error");
+        console.log(err);
     }
     async stop() {
         if (this.watcher) {

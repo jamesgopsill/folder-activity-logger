@@ -8,7 +8,6 @@ const config: FALConfig = {
 
 console.log(config)
 
-
 const watcher = new FAL(config)
 
 watcher.watch()

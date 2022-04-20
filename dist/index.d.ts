@@ -10,12 +10,15 @@ export interface FALConfig {
  * The Folder Activity Monitor class
  */
 export declare class FAL {
-    watchGlob: string;
-    logFilePath: string;
-    debug: boolean;
-    watcher: any;
+    private watchGlob;
+    private logFilePath;
+    private debug;
+    private watcher;
     constructor(config: FALConfig);
     watch(): void;
+    private onAll;
+    private onReady;
+    private onError;
     stop(): Promise<void>;
-    append(json: any): void;
+    private append;
 }
